@@ -16,12 +16,15 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v7
         with:
-          python-version: "3.10"
+          python-version: "3.14.6"
 
       - name: Install dependencies
-        run: pip install requests discord discord.py
+        run: |
+          pip install -r requirements.txt
 
       - name: Run script
         env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: python run.py
