@@ -11,10 +11,13 @@ class EpicDeals:
             'WEBHOOK_URL',
             YOUR_DISCORD_WEBHOOK_URL_HERE  # Substitua pelo seu webhook do Discord
         )
-        
-        
+    # END
+
+    
+    def Run(self):
         self.enviar_webhook()
     # END
+
 
 
     def obter_jogos_gratis(self):

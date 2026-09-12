@@ -11,11 +11,13 @@ class SteamDeals:
             YOUR_DISCORD_WEBHOOK_URL_HERE  # Substitua pelo seu webhook do Discord
         )
         self.ADULT_CONTENT_DESCRIPTOR_IDS = {2, 4}  # 2: Nudez/Sexual, 4: Adult Only explícito
-        
+    # END
+    
+    def Run(self):
         deals_data = self.get_steam_deals()
         self.send_to_discord(deals_data)
     # END
-
+    
 
     def get_steam_deals(self):
         headers = {
