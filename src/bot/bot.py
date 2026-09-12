@@ -18,7 +18,7 @@ class Bot:
             print(f'Bot conectado como {self.bot.user}')
             limpeza_automatica.start()
         
-        @tasks.loop(count=20)  # Roda apenas UMA vez
+        @tasks.loop(count=1)  # Roda apenas UMA vez
         async def limpeza_automatica():
             try:
                 canal = await self.bot.fetch_channel(self.ID_DO_CANAL)
