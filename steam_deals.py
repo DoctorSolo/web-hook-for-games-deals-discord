@@ -1,10 +1,12 @@
 import os
 import time
 import requests
+from config import YOUR_DISCORD_WEBHOOK_URL_HERE
 
+# Configuração do webhook do Discord
 WEBHOOK_URL = os.environ.get(
     'WEBHOOK_URL',
-    'YOUR_DISCORD_WEBHOOK_URL_HERE'  # Substitua pelo seu webhook do Discord
+    YOUR_DISCORD_WEBHOOK_URL_HERE  # Substitua pelo seu webhook do Discord
 )
 
 # IDs oficiais de conteúdo adulto da Valve
@@ -24,6 +26,7 @@ def get_steam_deals():
     return response.json()
 
 
+# Função para verificar se o app é adulto ou maduro
 def is_mature_or_adult(app_id):
     """Consulta a API de detalhes do app para verificar restrições etárias e descritores."""
     try:
@@ -39,7 +42,7 @@ def is_mature_or_adult(app_id):
         required_age = data.get("required_age", 0)
         if isinstance(required_age, str) and required_age.isdigit():
             required_age = int(required_age)
-        if required_age >= 18:
+        if required_age >= 17: # Steam considera 17+ como conteúdo maduro
             return True
 
         # 2. Checa descritores de conteúdo adulto oficiais da Steam
@@ -98,8 +101,8 @@ def send_to_discord(data):
             continue
 
         safe_deals.append(deal)
-        if len(safe_deals) == 10:  # Discord suporta no máximo 10 embeds
-            break
+        # if len(safe_deals) == 10:  # Discord suporta no máximo 10 embeds
+        #     break
 
     print(f"Total avaliados: {len(unique_deals)} | Selecionados: {len(safe_deals)}")
 
@@ -119,11 +122,11 @@ def send_to_discord(data):
             discount = int(((original_price - final_price) / original_price) * 100)
 
         price_text = (
-            f"💰 **R$ {final_price:.2f}** ~~R$ {original_price:.2f}~~\n🏷️ **-{discount}% OFF**"
+            f"💰 **$ {final_price:.2f}** ~~$ {original_price:.2f}~~\n🏷️ **-{discount}% OFF**"
             if discount > 0
-            else f"💰 **R$ {final_price:.2f}**"
+            else f"💰 **$ {final_price:.2f}**"
         )
-
+        
         embeds.append(
             {
                 "title": f"{i}. 🎮 {name}",
@@ -145,8 +148,11 @@ def send_to_discord(data):
             "color": 0x1B2838,
         }]
 
+    divide_embeds = [embeds[x:x + 10] for x in range(0, len(embeds),10)]
+    
     if WEBHOOK_URL:
-        requests.post(WEBHOOK_URL, json={"embeds": embeds}, timeout=10)
+        for embed_group in divide_embeds:
+            requests.post(WEBHOOK_URL, json={"embeds": embed_group}, timeout=10)
         print(f"Enviadas {len(embeds)} promoções com imagens!")
 
 
