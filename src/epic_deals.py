@@ -121,7 +121,7 @@ class EpicDeals:
                     "image": {"url": jogo["imagem"]} if jogo["imagem"] else {},
                     "footer": {
                         "text": f"Free Game Promotion",
-                        "icon_url": "https://github.com/DoctorSolo/web-hook-steam-deals-discord/blob/main/.github/assets/Epic-Games.svg?raw=true",
+                        "icon_url": "https://github.com/DoctorSolo/web-hook-steam-deals-discord/blob/main/.github/assets/Epic-Games.png?raw=true",
                     }, 
                 }
             )
