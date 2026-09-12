@@ -24,4 +24,4 @@ jobs:
       - name: Run script
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        run: python steam_deals.py
+        run: python run.py
