@@ -1,4 +1,5 @@
 import discord
+import os
 from discord.ext import commands, tasks
 from config import BOT_TOKEN, CHANNEL_ID
 
@@ -8,7 +9,7 @@ class Bot:
         self.intents = discord.Intents.default()
         self.intents.message_content = True
         self.bot = commands.Bot(command_prefix='!', intents=self.intents)
-        self.ID_DO_CANAL = CHANNEL_ID
+        self.ID_DO_CANAL = os.environ.get('CHANNEL_ID', CHANNEL_ID)  # Substitua pelo ID do seu canal
         self._setup_events()
     # END
         
@@ -44,6 +45,6 @@ class Bot:
     # END
     
     async def start(self):
-        await self.bot.start(BOT_TOKEN)
+        await self.bot.start(os.environ.get('BOT_TOKEN', BOT_TOKEN))  # Substitua pelo seu token do bot
     # END
 
