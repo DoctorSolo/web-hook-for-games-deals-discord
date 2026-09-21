@@ -3,7 +3,7 @@ name: Steam Deals Notifier
 
 on:
   schedule:
-    - cron: "0 */6 * * *" # A cada 6 horas
+    - cron: "0 0 * * *" # A cada 6 horas
   workflow_dispatch: # Permite rodar manualmente
 
 jobs:
